@@ -65,7 +65,7 @@ public final class CombatLogging extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
-        String playerName = event.getPlayer().getName();
+        String playerName = event.getPlayer().getDisplayName();
         if (combat_usernames.contains(playerName)) {
             System.out.println("[CL] " + playerName + " left the game whilst in combat");
             logged_usernames.add(playerName);  // Add to logged usernames
@@ -76,14 +76,12 @@ public final class CombatLogging extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        String playerName = event.getPlayer().getName();  // Check if the player combat logged
-        Player player = event.getPlayer(); // Store the player name
-        if (logged_usernames.contains(playerName)) {
-            System.out.println("[CL] " + playerName + " joined the game after leaving in combat");  // Kill the player
-            String command = "kill " + playerName + " [CL] Combat logging is not allowed!";
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);  // Remove the username from the Array
-            logged_usernames.remove(playerName);
-            player.sendMessage("[CL] You have been killed for combat logging.");
+        String name = event.getPlayer().getDisplayName();
+        if (logged_usernames.contains(name)) {
+            String command = "kill " + name + " [CL] You have been killed for combat logging!";
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say [CL] " + name + "has been killed for combat logging");
+
         }
     }
 
