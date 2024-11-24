@@ -1,0 +1,4 @@
+name: CombatLogging
+version: '1.0-SNAPSHOT'
+main: com.BurntBrandy.combatLogging.CombatLogging
+api-version: '1.21.3'
