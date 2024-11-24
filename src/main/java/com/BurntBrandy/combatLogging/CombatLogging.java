@@ -54,8 +54,9 @@ public final class CombatLogging extends JavaPlugin implements Listener {
 
     private void checkCombatStatus(Player player) {
         long lastDamage = lastDamageTime.getOrDefault(player.getName(), 0L);
+        String name = player.getName();
         if (System.currentTimeMillis() - lastDamage > combatTimeout) {  // Player has not taken damage for the set amount of time, so remove them from combat list
-            combat_usernames.remove(player.getName());
+            combat_usernames.remove(name);
             System.out.println("[CL] " + player.getName() + " is no longer in combat.");
             Player remove_combat_message = player.getPlayer();
             assert remove_combat_message != null;
@@ -78,10 +79,9 @@ public final class CombatLogging extends JavaPlugin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         String name = event.getPlayer().getDisplayName();
         if (logged_usernames.contains(name)) {
-            String command = "kill " + name + " [CL] You have been killed for combat logging!";
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+            event.getPlayer().setHealth(0);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say [CL] " + name + "has been killed for combat logging");
-
+            logged_usernames.remove(name);
         }
     }
 
