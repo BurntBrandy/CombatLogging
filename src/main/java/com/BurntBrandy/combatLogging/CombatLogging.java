@@ -18,7 +18,7 @@ public final class CombatLogging extends JavaPlugin implements Listener {
     private final List<String> combat_usernames = new ArrayList<>();
     private final List<String> logged_usernames = new ArrayList<>();
     private final HashMap<String, Long> lastDamageTime = new HashMap<>(); // Track the last damage time for each player
-    private final long combatTimeout = 30000L; // Time in milliseconds before a player is considered out of combat (10 seconds)
+    private final long combatTimeout = 50000L; // Time in milliseconds before a player is considered out of combat (10 seconds)
 
     @Override
     public void onEnable() {
